@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia de Publicação e Controle de Pauta — TJAC</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(165deg, #0F1923 0%, #1A2744 40%, #1E3A5F 100%);
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      padding: 24px 16px;
+      color: #E8E8E8;
+    }
+    button { cursor: pointer; }
+
+    /* Header */
+    .header { text-align: center; margin-bottom: 24px; }
+    .header-inner {
+      display: inline-block;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 18px 32px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .header h1 { font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: #F0C040; }
+    .header .sub1 { margin-top: 6px; font-size: 11px; color: #8A9BB0; letter-spacing: 1.5px; text-transform: uppercase; }
+    .header .sub2 { margin-top: 4px; font-size: 10px; color: #667788; }
+
+    /* Instruction */
+    .instruction {
+      max-width: 820px; margin: 0 auto 18px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px; padding: 12px 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 12.5px; color: #9AB; text-align: center; line-height: 1.6;
+    }
+    .instruction strong.gold { color: #F0C040; }
+    .instruction strong.pink { color: #FF6B9D; }
+
+    /* Calendar */
+    .calendar-box {
+      max-width: 820px; margin: 0 auto 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px; padding: 22px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .cal-nav {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;
+    }
+    .cal-nav button {
+      background: rgba(255,255,255,0.1); border: none; color: #FFF;
+      border-radius: 8px; padding: 8px 16px; font-size: 16px; font-weight: 600;
+    }
+    .cal-nav h2 { font-size: 20px; font-weight: 700; color: #FFF; letter-spacing: 1px; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .wd-header {
+      text-align: center; font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; padding: 6px 0;
+    }
+    .day-cell {
+      border-radius: 10px; padding: 8px 4px; text-align: center;
+      font-size: 14px; transition: all 0.2s;
+      position: relative; min-height: 48px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .day-cell .label { font-size: 7px; margin-top: 1px; letter-spacing: 0.3px; }
+    .day-cell .dots { display: flex; gap: 2px; margin-top: 2px; flex-wrap: wrap; justify-content: center; }
+    .dot { width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
+
+    /* Legend */
+    .legend {
+      max-width: 820px; margin: 0 auto 20px;
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px; padding: 5px 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 10.5px; color: #BCC;
+    }
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+    /* Timeline */
+    .timeline-box {
+      max-width: 820px; margin: 0 auto;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px; padding: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .timeline-box h3 { font-size: 17px; font-weight: 700; color: #F0C040; text-align: center; margin-bottom: 6px; }
+    .timeline-box .tl-sub { font-size: 12px; color: #8A9BB0; text-align: center; margin-bottom: 20px; }
+    .tl-container { position: relative; padding-left: 28px; }
+    .tl-line {
+      position: absolute; left: 12px; top: 8px; bottom: 8px;
+      width: 2px; background: rgba(255,255,255,0.12); border-radius: 2px;
+    }
+    .tl-item { position: relative; margin-bottom: 18px; padding-left: 20px; }
+    .tl-dot {
+      position: absolute; left: -20px; top: 6px;
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.15);
+    }
+    .tl-card { border-radius: 12px; padding: 12px 16px; }
+    .tl-card-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 5px; flex-wrap: wrap; gap: 6px;
+    }
+    .tl-card-title { font-size: 13.5px; font-weight: 700; }
+    .tl-card-badges { display: flex; gap: 6px; align-items: center; }
+    .tl-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px; }
+    .tl-subtitle-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 5px; }
+    .tl-desc { font-size: 12px; color: #8A9BB0; line-height: 1.6; }
+
+    .warn-box {
+      margin-top: 18px; background: rgba(192,57,43,0.1);
+      border: 1px solid rgba(192,57,43,0.25); border-radius: 12px; padding: 12px 16px;
+      font-size: 12px; color: #E8BCBC; line-height: 1.7;
+    }
+    .info-box {
+      margin-top: 12px; background: rgba(39,174,96,0.08);
+      border: 1px solid rgba(39,174,96,0.2); border-radius: 12px; padding: 12px 16px;
+      font-size: 11.5px; color: #A3D9B1; line-height: 1.6;
+    }
+    .footer {
+      max-width: 820px; margin: 20px auto 0; text-align: center;
+      font-size: 9.5px; color: #445566; letter-spacing: 0.5px; line-height: 1.6;
+    }
+
+    #timeline-section { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-inner">
+    <h1>⚖️ GUIA DE PUBLICAÇÃO E CONTROLE DE PAUTA</h1>
+    <p class="sub1">Julgamento Eletrônico — Órgãos Fracionários — TJAC</p>
+    <p class="sub2">Contagem exclusiva em dias úteis • Feriados nacionais e estaduais (AC) incluídos</p>
+  </div>
+</div>
+
+<!-- Instruction -->
+<div class="instruction">
+  Selecione um <strong class="gold">dia útil</strong> para definir a data da sessão.
+  Fins de semana e feriados são <strong class="pink">automaticamente excluídos</strong> de toda a contagem.
+</div>
+
+<!-- Calendar -->
+<div class="calendar-box">
+  <div class="cal-nav">
+    <button id="prevBtn">◀</button>
+    <h2 id="calTitle"></h2>
+    <button id="nextBtn">▶</button>
+  </div>
+  <div class="cal-grid" id="weekdayHeaders"></div>
+  <div id="calBody"></div>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot" style="background:#E67E22"></span>Envio p/ Publicação</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#9B59B6"></span>Disponibilização DJe</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#2980B9"></span>Publicação Considerada</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#27AE60"></span>Prazo 5 Dias Úteis</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#C0392B"></span>Verificação 48h (Art. 8º, II)</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#F0C040"></span>Sessão de Julgamento</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#FF6B9D"></span>Feriado</div>
+</div>
+
+<!-- Timeline -->
+<div id="timeline-section">
+  <div class="timeline-box">
+    <h3>📅 Linha do Tempo Completa</h3>
+    <p class="tl-sub" id="tl-subtitle"></p>
+    <div class="tl-container">
+      <div class="tl-line"></div>
+      <div id="tl-items"></div>
+    </div>
+    <div class="warn-box" id="tl-warn"></div>
+    <div class="info-box">
+      <strong style="color:#27AE60">ℹ️ Observação:</strong>
+      Toda a contagem é realizada exclusivamente em <strong>dias úteis</strong>.
+      Sábados, domingos e feriados nacionais/estaduais (AC) são desconsiderados em todas as etapas do fluxo.
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Tribunal de Justiça do Estado do Acre — Segunda Câmara Cível — Coordenadoria<br>
+  Res. CNJ n.º 591/2024 • Contagem em dias úteis (Art. 219 do CPC)
+</div>
+
+<script>
+const WEEKDAYS = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const MONTHS_PT = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+let currentYear, currentMonth, selectedDay = null, timeline = null;
+
+const today = new Date();
+currentYear = today.getFullYear();
+currentMonth = today.getMonth();
+
+// ========== FERIADOS ==========
+function getFixedHolidays(year) {
+  return [
+    [year,0,1],[year,3,21],[year,4,1],[year,5,15],[year,8,5],[year,8,7],
+    [year,9,12],[year,10,2],[year,10,15],[year,10,17],[year,10,20],[year,11,8],[year,11,25]
+  ];
+}
+function getEaster(year) {
+  const a=year%19,b=Math.floor(year/100),c=year%100,d=Math.floor(b/4),e=b%4;
+  const f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30;
+  const i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451);
+  const month=Math.floor((h+l-7*m+114)/31)-1,day=((h+l-7*m+114)%31)+1;
+  return new Date(year,month,day);
+}
+function getMovableHolidays(year) {
+  const easter=getEaster(year),e=easter.getTime(),day=86400000;
+  return [new Date(e-48*day),new Date(e-47*day),new Date(e-2*day),new Date(e),new Date(e+60*day)]
+    .map(d=>[d.getFullYear(),d.getMonth(),d.getDate()]);
+}
+function getAllHolidays(year) {
+  const all=[];
+  [year-1,year,year+1].forEach(y=>{all.push(...getFixedHolidays(y));all.push(...getMovableHolidays(y));});
+  return all;
+}
+function isHoliday(y,m,d,holidays) { return holidays.some(h=>h[0]===y&&h[1]===m&&h[2]===d); }
+function isWeekend(y,m,d) { const w=new Date(y,m,d).getDay(); return w===0||w===6; }
+function isBusinessDay(y,m,d,holidays) { return !isWeekend(y,m,d)&&!isHoliday(y,m,d,holidays); }
+function addBusinessDays(date,count,dir,holidays) {
+  let d=new Date(date),rem=Math.abs(count),direction=dir<0?-1:1;
+  while(rem>0){d.setDate(d.getDate()+direction);if(isBusinessDay(d.getFullYear(),d.getMonth(),d.getDate(),holidays))rem--;}
+  return d;
+}
+function sameDay(d1,y,m,d){return d1.getFullYear()===y&&d1.getMonth()===m&&d1.getDate()===d;}
+function formatDate(d){
+  const dias=["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
+  return `${dias[d.getDay()]}, ${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+function formatShort(d){return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}`;}
+function getHolidayName(year,month,day){
+  const names={"0-1":"Confraternização Universal","3-21":"Tiradentes","4-1":"Dia do Trabalho","5-15":"Aniversário do Acre",
+    "8-5":"Dia da Amazônia","8-7":"Independência do Brasil","9-12":"N. Sra. Aparecida","10-2":"Finados",
+    "10-15":"Proclamação da República","10-17":"Tratado de Petrópolis","10-20":"Consciência Negra","11-8":"Dia da Justiça","11-25":"Natal"};
+  const key=`${month}-${day}`;
+  if(names[key])return names[key];
+  const easter=getEaster(year),e=easter.getTime(),dTime=new Date(year,month,day).getTime(),dayMs=86400000;
+  const diff=Math.round((dTime-e)/dayMs);
+  if(diff===-48)return "Seg. Carnaval";if(diff===-47)return "Terça Carnaval";
+  if(diff===-2)return "Sexta-feira Santa";if(diff===0)return "Páscoa";if(diff===60)return "Corpus Christi";
+  return "Feriado";
+}
+
+function calcTimeline(sessionDate,holidays){
+  const sd=new Date(sessionDate);
+  const prazoFim=addBusinessDays(sd,1,-1,holidays);
+  const prazoInicio=addBusinessDays(prazoFim,4,-1,holidays);
+  const publicacaoConsiderada=addBusinessDays(prazoInicio,1,-1,holidays);
+  const disponibilizacao=addBusinessDays(publicacaoConsiderada,1,-1,holidays);
+  const envioPublicacao=addBusinessDays(disponibilizacao,1,-1,holidays);
+  const verificacao48h=addBusinessDays(sd,2,-1,holidays);
+  return{sessionDate:sd,envioPublicacao,disponibilizacao,publicacaoConsiderada,prazoInicio,prazoFim,verificacao48h};
+}
+
+function getDayFlags(day,tl,year,month,holidays){
+  if(!tl)return{};
+  const f={};
+  if(sameDay(tl.envioPublicacao,year,month,day))f.envio=true;
+  if(sameDay(tl.disponibilizacao,year,month,day))f.disp=true;
+  if(sameDay(tl.publicacaoConsiderada,year,month,day))f.pub=true;
+  if(sameDay(tl.verificacao48h,year,month,day))f.verif=true;
+  if(sameDay(tl.sessionDate,year,month,day))f.sessao=true;
+  const thisDate=new Date(year,month,day);
+  if(thisDate>=tl.prazoInicio&&thisDate<=tl.prazoFim&&isBusinessDay(year,month,day,holidays))f.prazo=true;
+  return f;
+}
+
+function getDayStyle(day,year,month,holidays,tl){
+  const f=getDayFlags(day,tl,year,month,holidays);
+  const we=isWeekend(year,month,day);
+  const hol=isHoliday(year,month,day,holidays);
+  if(f.sessao)return{bg:"linear-gradient(135deg,#1A1A2E,#2C3E50)",text:"#F0C040",border:"2px solid #F0C040"};
+  if(f.verif)return{bg:"#C0392B",text:"#FFF",border:"2px solid #922B21"};
+  if(f.envio)return{bg:"#E67E22",text:"#FFF",border:"2px solid #CA6F1E"};
+  if(f.disp)return{bg:"#9B59B6",text:"#FFF",border:"2px solid #7D3C98"};
+  if(f.pub)return{bg:"#2980B9",text:"#FFF",border:"2px solid #1F618D"};
+  if(f.prazo)return{bg:"#27AE60",text:"#FFF",border:"2px solid #1E8449"};
+  if(hol&&!we)return{bg:"linear-gradient(135deg,#FF6B9D22,#FF6B9D11)",text:"#FF6B9D",border:"2px solid #FF6B9D55"};
+  if(we)return{bg:"#1A1F2E",text:"#445",border:"2px solid transparent"};
+  if(selectedDay===day)return{bg:"#D5F5E3",text:"#1A1A2E",border:"2px solid #27AE60"};
+  return{bg:"rgba(255,255,255,0.06)",text:"#CDD",border:"2px solid rgba(255,255,255,0.08)"};
+}
+
+function renderCalendar(){
+  const holidays=getAllHolidays(currentYear);
+  document.getElementById('calTitle').textContent=`${MONTHS_PT[currentMonth]} ${currentYear}`;
+
+  // Weekday headers
+  const wdEl=document.getElementById('weekdayHeaders');
+  wdEl.innerHTML='';
+  WEEKDAYS.forEach((wd,i)=>{
+    const d=document.createElement('div');
+    d.className='wd-header';
+    d.style.color=(i===0||i===6)?'#E74C3C':'#8899AA';
+    d.textContent=wd;
+    wdEl.appendChild(d);
+  });
+
+  const daysInMonth=new Date(currentYear,currentMonth+1,0).getDate();
+  const firstDay=new Date(currentYear,currentMonth,1).getDay();
+
+  const body=document.getElementById('calBody');
+  body.innerHTML='';
+
+  const weeks=[];
+  let cw=new Array(firstDay).fill(null);
+  for(let d=1;d<=daysInMonth;d++){
+    cw.push(d);
+    if(cw.length===7){weeks.push(cw);cw=[];}
+  }
+  if(cw.length>0){while(cw.length<7)cw.push(null);weeks.push(cw);}
+
+  weeks.forEach(week=>{
+    const row=document.createElement('div');
+    row.className='cal-grid';
+    row.style.marginBottom='4px';
+    week.forEach(day=>{
+      const cell=document.createElement('div');
+      if(!day){row.appendChild(cell);return;}
+      const st=getDayStyle(day,currentYear,currentMonth,holidays,timeline);
+      const we=isWeekend(currentYear,currentMonth,day);
+      const hol=isHoliday(currentYear,currentMonth,day,holidays);
+      const biz=isBusinessDay(currentYear,currentMonth,day,holidays);
+      const flags=getDayFlags(day,timeline,currentYear,currentMonth,holidays);
+      const hasEv=Object.keys(flags).length>0;
+
+      cell.className='day-cell';
+      cell.style.background=st.bg;
+      cell.style.color=st.text;
+      cell.style.border=st.border;
+      cell.style.fontWeight=hasEv?700:biz?500:400;
+      cell.style.cursor=biz?'pointer':'default';
+      cell.style.opacity=(!biz&&!hasEv)?'0.45':'1';
+      cell.style.boxShadow=hasEv?'0 2px 10px rgba(0,0,0,0.35)':'none';
+
+      if(hol&&!we)cell.title=getHolidayName(currentYear,currentMonth,day);
+      else if(we)cell.title='Fim de semana';
+      else if(!hasEv)cell.title='Clique para definir como sessão';
+
+      const num=document.createElement('span');
+      num.textContent=day;
+      cell.appendChild(num);
+
+      if(hol&&!we){
+        const lbl=document.createElement('span');
+        lbl.className='label';lbl.style.color='#FF6B9D';lbl.textContent='FERIADO';cell.appendChild(lbl);
+      }
+      if(we){
+        const lbl=document.createElement('span');
+        lbl.className='label';lbl.style.color='#556';
+        lbl.textContent=new Date(currentYear,currentMonth,day).getDay()===0?'DOM':'SÁB';cell.appendChild(lbl);
+      }
+      if(hasEv){
+        const dots=document.createElement('div');dots.className='dots';
+        const dotColors={envio:'#E67E22',disp:'#9B59B6',pub:'#2980B9',prazo:'#27AE60',verif:'#C0392B',sessao:'#F0C040'};
+        Object.keys(flags).forEach(k=>{
+          const dot=document.createElement('span');dot.className='dot';dot.style.background=dotColors[k];dots.appendChild(dot);
+        });
+        cell.appendChild(dots);
+      }
+
+      if(biz){
+        cell.addEventListener('click',()=>{
+          selectedDay=day;
+          timeline=calcTimeline(new Date(currentYear,currentMonth,day),getAllHolidays(currentYear));
+          renderCalendar();
+          renderTimeline();
+        });
+      }
+      row.appendChild(cell);
+    });
+    body.appendChild(row);
+  });
+}
+
+function renderTimeline(){
+  if(!timeline){document.getElementById('timeline-section').style.display='none';return;}
+  document.getElementById('timeline-section').style.display='block';
+  document.getElementById('tl-subtitle').textContent=`Sessão: ${formatDate(timeline.sessionDate)} • Todos os marcos em dias úteis`;
+
+  const items=[
+    {color:"#E67E22",icon:"📤",title:"Envio para Publicação",date:timeline.envioPublicacao,
+     desc:"A Coordenadoria do órgão fracionário envia a pauta para publicação no DJe. Marco em dia útil."},
+    {color:"#9B59B6",icon:"📰",title:"Disponibilização no DJe",date:timeline.disponibilizacao,
+     desc:"A pauta é disponibilizada no DJe em dia útil. A publicação será considerada efetivada no próximo dia útil."},
+    {color:"#2980B9",icon:"📋",title:"Publicação Considerada",date:timeline.publicacaoConsiderada,
+     desc:"Publicação considerada efetivada (1º dia útil após a disponibilização). O prazo de 5 dias úteis inicia no dia útil seguinte."},
+    {color:"#27AE60",icon:"⏳",title:"Prazo de 5 Dias Úteis",date:timeline.prazoInicio,
+     subtitle:`${formatShort(timeline.prazoInicio)} → ${formatShort(timeline.prazoFim)}`,
+     desc:"Prazo mínimo de 5 dias úteis entre a publicação e a sessão (Res. CNJ 591/2024). Fins de semana e feriados NÃO são contados."},
+    {color:"#C0392B",icon:"🔍",title:"Verificação 48h Úteis — Retirada de Pauta",date:timeline.verificacao48h,
+     desc:"Até 2 dias úteis antes da sessão, o Coordenador verifica processos com pedido de retirada de pauta (art. 8º, II, Res. 591/2024 CNJ)."},
+    {color:"#F0C040",icon:"⚖️",title:"Sessão de Julgamento Eletrônico",date:timeline.sessionDate,highlight:true,
+     desc:"Início da sessão de julgamento eletrônico do órgão fracionário."},
+  ];
+
+  const container=document.getElementById('tl-items');
+  container.innerHTML='';
+  items.forEach(item=>{
+    const wrapper=document.createElement('div');wrapper.className='tl-item';
+
+    const dot=document.createElement('div');dot.className='tl-dot';
+    dot.style.background=item.color;dot.style.boxShadow=`0 0 10px ${item.color}55`;wrapper.appendChild(dot);
+
+    const card=document.createElement('div');card.className='tl-card';
+    card.style.background=item.highlight?'linear-gradient(135deg,rgba(240,192,64,0.12),rgba(240,192,64,0.03))':'rgba(255,255,255,0.03)';
+    card.style.border=item.highlight?'1px solid rgba(240,192,64,0.25)':'1px solid rgba(255,255,255,0.06)';
+
+    const top=document.createElement('div');top.className='tl-card-top';
+    const titleEl=document.createElement('span');titleEl.className='tl-card-title';
+    titleEl.style.color=item.highlight?'#F0C040':'#FFF';titleEl.textContent=`${item.icon} ${item.title}`;
+    top.appendChild(titleEl);
+
+    const badges=document.createElement('div');badges.className='tl-card-badges';
+    if(item.subtitle){
+      const sb=document.createElement('span');sb.className='tl-subtitle-badge';
+      sb.style.color=item.color;sb.style.background=`${item.color}22`;sb.textContent=item.subtitle;badges.appendChild(sb);
+    }
+    const badge=document.createElement('span');badge.className='tl-badge';
+    badge.style.background=item.color;
+    badge.style.color=item.color==='#F0C040'?'#1A1A2E':'#FFF';
+    badge.textContent=formatShort(item.date);badges.appendChild(badge);
+    top.appendChild(badges);card.appendChild(top);
+
+    const desc=document.createElement('p');desc.className='tl-desc';desc.textContent=item.desc;card.appendChild(desc);
+    wrapper.appendChild(card);container.appendChild(wrapper);
+  });
+
+  document.getElementById('tl-warn').innerHTML=`<strong style="color:#E74C3C">⚠️ Art. 8º, II, Resolução n.º 591/2024 — CNJ:</strong>
+    O Coordenador do órgão fracionário deve verificar, até <strong>2 dias úteis antes da sessão</strong>
+    (${formatDate(timeline.verificacao48h)}), os processos com pedido de retirada de pauta.`;
+}
+
+document.getElementById('prevBtn').addEventListener('click',()=>{
+  if(currentMonth===0){currentMonth=11;currentYear--;}else currentMonth--;
+  selectedDay=null;timeline=null;renderCalendar();renderTimeline();
+});
+document.getElementById('nextBtn').addEventListener('click',()=>{
+  if(currentMonth===11){currentMonth=0;currentYear++;}else currentMonth++;
+  selectedDay=null;timeline=null;renderCalendar();renderTimeline();
+});
+
+renderCalendar();
+</script>
+</body>
+</html>
